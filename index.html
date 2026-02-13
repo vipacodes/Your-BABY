@@ -1,82 +1,153 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Accessing Heart System...</title>
+  <title>Heart Access System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Stylish Romantic Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
   <style>
     body {
-      background-color: purple;
-      color: #00ff99;
-      font-family: monospace;
+      margin: 0;
+      height: 100vh;
+      background: #E0B0FF; /* Mauve */
+      color: white;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      padding-top: 100px;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 400px;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 20px;
+    }
+
+    input {
+      padding: 12px;
+      width: 80%;
+      border-radius: 6px;
+      border: none;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: purple;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #6a0dad;
     }
 
     .hidden {
       display: none;
     }
 
-    button {
-      padding: 12px 25px;
-      font-size: 18px;
-      background-color: #ff4d6d;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #ff1e4d;
-    }
-
     .heart {
       font-size: 60px;
-      animation: pulse 1s infinite;
+      color: purple;
+      animation: pulse 1.2s infinite;
     }
 
     @keyframes pulse {
       0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
+      50% { transform: scale(1.3); }
       100% { transform: scale(1); }
     }
+
+    .love-message {
+      font-family: 'Great Vibes', cursive;
+      font-size: 28px;
+      margin-top: 20px;
+    }
+
+    /* Falling Hearts */
+    .falling-heart {
+      position: fixed;
+      top: -10px;
+      color: purple;
+      font-size: 20px;
+      animation: fall linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
   </style>
 </head>
+
 <body>
 
-  <h2>Initializing HeartOS v2.14...</h2>
-  <p>Access Restricted 🔒</p>
+<div class="container">
 
-  <div id="login">
-    <p>Enter Password:</p>
-    <input type="text" id="password" placeholder="Hint: Your Name">
-    <br><br>
+  <div id="loginBox">
+    <h1>Enter Password to Unlock My Heart 💜</h1>
+    <input type="text" id="password" placeholder="Hint: Your Nickname in capital letters">
+    <br>
     <button onclick="checkPassword()">Unlock</button>
   </div>
 
-  <div id="message" class="hidden">
-    <h1>ACCESS GRANTED ❤️</h1>
-    <div class="heart">❤️</div>
-    <p>
+  <div id="secretMessage" class="hidden">
+    <h1>ACCESS GRANTED 💜</h1>
+    <div class="heart">💜</div>
+    <div class="love-message">
       Out of everyone in this world,<br>
       I would still choose you.<br><br>
-      You are my peace, my happiness,<br>
-      and my forever.<br><br>
-      Happy Valentine’s Day, My Love 💖
-    </p>
+      You are my forever,<br>
+      my peace, and my greatest blessing.<br><br>
+      Happy Valentine’s Day 💜
+    </div>
   </div>
 
-<script>
-  function checkPassword() {
-    var input = document.getElementById("password").value;
-    var correctPassword = "HERNAME"; // gheefted
+</div>
 
-    if(input.toLowerCase() === correctPassword.toLowerCase()) {
-      document.getElementById("login").style.display = "none";
-      document.getElementById("message").classList.remove("hidden");
-    } else {
-      alert("Access Denied 💔 Try again.");
-    }
+<script>
+function checkPassword() {
+  var input = document.getElementById("password").value;
+  var correctPassword = "GHEEFTED"; // replace with her name in lowercase
+
+  if(input.tohigherCase() === correctPassword.tohigherCase()) {
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("secretMessage").classList.remove("hidden");
   }
+}
+
+/* Generate Falling Hearts */
+for (let i = 0; i < 25; i++) {
+  let heart = document.createElement("div");
+  heart.classList.add("falling-heart");
+  heart.innerHTML = "💜";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+  heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+  document.body.appendChild(heart);
+}
 </script>
 
 </body>
