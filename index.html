@@ -1,152 +1,252 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Heart Access System</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heart Access 💜</title>
 
-  <!-- Stylish Romantic Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<!-- Romantic Font -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: #E0B0FF; /* Mauve */
-      color: white;
-      font-family: Arial, sans-serif;
-      font-weight: bold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      overflow: hidden;
-    }
+<style>
+body{
+  margin:0;
+  padding:0;
+  height:100vh;
+  background:#E0B0FF;
+  font-family: Arial, sans-serif;
+  overflow:hidden;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
 
-    .container {
-      width: 90%;
-      max-width: 400px;
-      z-index: 2;
-    }
+.container{
+  position:relative;
+  z-index:2;
+  width:90%;
+  max-width:450px;
+}
 
-    h1 {
-      font-size: 20px;
-    }
+input{
+  padding:12px;
+  width:80%;
+  border-radius:6px;
+  border:none;
+  text-align:center;
+  font-size:16px;
+}
 
-    input {
-      padding: 12px;
-      width: 80%;
-      border-radius: 6px;
-      border: none;
-      text-align: center;
-      font-size: 16px;
-    }
+button{
+  margin-top:15px;
+  padding:10px 20px;
+  background:purple;
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+}
 
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background: purple;
-      border: none;
-      border-radius: 6px;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
+button:hover{
+  background:#6a0dad;
+}
 
-    button:hover {
-      background: #6a0dad;
-    }
+.hidden{display:none;}
 
-    .hidden {
-      display: none;
-    }
+.heart{
+  font-size:60px;
+  color:purple;
+  animation:pulse 1s infinite;
+  margin:15px 0;
+}
 
-    .heart {
-      font-size: 60px;
-      color: purple;
-      animation: pulse 1.2s infinite;
-    }
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.3);}
+  100%{transform:scale(1);}
+}
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.3); }
-      100% { transform: scale(1); }
-    }
+.love-message{
+  font-family:'Great Vibes', cursive;
+  font-size:28px;
+  margin-top:20px;
+}
 
-    .love-message {
-      font-family: 'Great Vibes', cursive;
-      font-size: 28px;
-      margin-top: 20px;
-    }
+.glow{
+  color:purple;
+  font-size:32px;
+  text-shadow:0 0 10px purple,0 0 20px purple;
+  animation: glowPulse 2s infinite;
+}
 
-    /* Falling Hearts */
-    .falling-heart {
-      position: fixed;
-      top: -10px;
-      color: purple;
-      font-size: 20px;
-      animation: fall linear infinite;
-      z-index: 1;
-    }
+@keyframes glowPulse{
+  0%{text-shadow:0 0 10px purple,0 0 20px purple;}
+  50%{text-shadow:0 0 20px purple,0 0 40px purple;}
+  100%{text-shadow:0 0 10px purple,0 0 20px purple;}
+}
 
-    @keyframes fall {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh);
-        opacity: 0;
-      }
-    }
+.falling-heart{
+  position:fixed;
+  top:-10px;
+  color:purple;
+  font-size:20px;
+  animation:fall linear infinite;
+  z-index:1;
+}
 
-  </style>
+@keyframes fall{
+  to{
+    transform:translateY(100vh);
+    opacity:0;
+  }
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  pointer-events:none;
+  z-index:0;
+}
+</style>
 </head>
 
 <body>
 
+<audio id="bgMusic" src="rugermusic.mp3" loop></audio>
+<canvas id="fireworks"></canvas>
+
 <div class="container">
 
-  <div id="loginBox">
-    <h1>Enter Password to Unlock My Heart 💜</h1>
-    <input type="text" id="password" placeholder="Hint: Your Nickname in capital letters">
-    <br>
-    <button onclick="checkPassword()">Unlock</button>
-  </div>
+<!-- Login -->
+<div id="loginBox">
+<h2>Enter Password 💜</h2>
+<input type="text" id="password" placeholder="GHEEFTED">
+<br>
+<button onclick="startCountdown()">Unlock</button>
+<p id="error" class="hidden">Wrong password 💔</p>
+<p id="countdown"></p>
+</div>
 
-  <div id="secretMessage" class="hidden">
-    <h1>ACCESS GRANTED 💜</h1>
-    <div class="heart">💜</div>
-    <div class="love-message">
-      Out of everyone in this world,<br>
-      I would still choose you.<br><br>
-      You are my forever,<br>
-      my peace, and my greatest blessing.<br><br>
-      Happy Valentine’s Day 💜
-    </div>
-  </div>
+<!-- Secret Love Message -->
+<div id="secret" class="hidden">
+<div class="heart">💜</div>
+<div class="love-message">
+<span class="glow">GHEEFTED</span><br><br>
+<span id="typedText"></span>
+</div>
+
+<!-- Yes/No interactive -->
+<div id="choices" class="hidden" style="margin-top:20px;">
+<button onclick="yes()">Yes 💖</button>
+<button onclick="no()">No 💔</button>
+</div>
+</div>
 
 </div>
 
 <script>
-function checkPassword() {
-  var input = document.getElementById("password").value;
-  var correctPassword = "GHEEFTED"; // replace with her name in lowercase
+// PASSWORD
+var correctPassword = "GHEEFTED"; // highercase
 
-  if(input.tohigherCase() === correctPassword.tohigherCase()) {
-    document.getElementById("loginBox").style.display = "none";
-    document.getElementById("secretMessage").classList.remove("hidden");
+function startCountdown(){
+  var input=document.getElementById("password").value.toHigherCase();
+  if(input!==correctPassword){
+    document.getElementById("error").classList.remove("hidden");
+    return;
   }
+
+  let count=3;
+  document.getElementById("error").classList.add("hidden");
+  let counter=setInterval(function(){
+    document.getElementById("countdown").innerText="Unlocking in "+count+"...";
+    count--;
+    if(count<0){
+      clearInterval(counter);
+      unlock();
+    }
+  },1000);
 }
 
-/* Generate Falling Hearts */
-for (let i = 0; i < 25; i++) {
-  let heart = document.createElement("div");
-  heart.classList.add("falling-heart");
-  heart.innerHTML = "💜";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
-  heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+function unlock(){
+  document.getElementById("loginBox").style.display="none";
+  document.getElementById("secret").classList.remove("hidden");
+  document.getElementById("bgMusic").play();
+  typeWriter();
+  launchFireworks();
+}
+
+// TYPEWRITER
+var message="Hey baby my GIFT Out of everyone in this world, I would still choose you. You are my peace, my forever, my everything. Happy Valentine's Day 💜";
+function typeWriter(){
+  let i=0;
+  function typing(){
+    if(i<message.length){
+      document.getElementById("typedText").innerHTML+=message.charAt(i);
+      i++;
+      setTimeout(typing,50);
+    } else {
+      document.getElementById("choices").classList.remove("hidden");
+    }
+  }
+  typing();
+}
+
+// FALLING HEARTS
+for(let i=0;i<40;i++){
+  let heart=document.createElement("div");
+  heart.className="falling-heart";
+  heart.innerHTML="💜";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.fontSize=(Math.random()*20+15)+"px";
+  heart.style.animationDuration=(Math.random()*5+3)+"s";
   document.body.appendChild(heart);
+}
+
+// FIREWORKS
+function launchFireworks(){
+  const canvas=document.getElementById("fireworks");
+  const ctx=canvas.getContext("2d");
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+
+  let fireworks=[];
+  function createFirework(){
+    fireworks.push({
+      x:Math.random()*canvas.width,
+      y:canvas.height,
+      radius:2,
+      color:"purple",
+      speed:Math.random()*5+2
+    });
+  }
+
+  function animate(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    fireworks.forEach((f,i)=>{
+      f.y-=f.speed;
+      ctx.beginPath();
+      ctx.arc(f.x,f.y,f.radius,0,Math.PI*2);
+      ctx.fillStyle=f.color;
+      ctx.fill();
+      if(f.y<0) fireworks.splice(i,1);
+    });
+    requestAnimationFrame(animate);
+  }
+  setInterval(createFirework,200);
+  animate();
+}
+
+// CHOICES
+function yes(){
+  alert("💖 She said YES! Love unlocked forever! 💖");
+}
+
+function no(){
+  alert("💔 Oh no! But my love still remains 💜");
 }
 </script>
 
