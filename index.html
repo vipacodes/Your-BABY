@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Heart Access 💜</title>
 
-<!-- Romantic Font -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
@@ -121,25 +120,22 @@ canvas{
 
 <div class="container">
 
-<!-- Login -->
 <div id="loginBox">
 <h2>Enter Password 💜</h2>
 <input type="text" id="password" placeholder="Her Name">
 <br>
-<button onclick="startCountdown()">Unlock</button>
+<button id="unlockBtn">Unlock</button>
 <p id="error" class="hidden">Wrong password 💔</p>
 <p id="countdown"></p>
 </div>
 
-<!-- Secret Love Message -->
 <div id="secret" class="hidden">
 <div class="heart">💜</div>
 <div class="love-message">
-<span class="glow">GHEEFTED</span><br><br>
+<span class="glow">gheefted</span><br><br>
 <span id="typedText"></span>
 </div>
 
-<!-- Yes/No interactive -->
 <div id="choices" class="hidden" style="margin-top:20px;">
 <button onclick="yes()">Yes 💖</button>
 <button onclick="no()">No 💔</button>
@@ -149,23 +145,28 @@ canvas{
 </div>
 
 <script>
-// PASSWORD
-var correctPassword = "hername"; // lowercase
+var correctPassword = "hername"; // replace with her name in lowercase
 
-function startCountdown(){
+document.getElementById("unlockBtn").addEventListener("click", function(){
   var input=document.getElementById("password").value.toLowerCase();
   if(input!==correctPassword){
     document.getElementById("error").classList.remove("hidden");
     return;
   }
-
-  let count=3;
   document.getElementById("error").classList.add("hidden");
+  startCountdown();
+});
+
+function startCountdown(){
+  let count=3;
+  let countdownEl=document.getElementById("countdown");
+  countdownEl.innerText="Unlocking in "+count+"...";
   let counter=setInterval(function(){
-    document.getElementById("countdown").innerText="Unlocking in "+count+"...";
     count--;
+    countdownEl.innerText="Unlocking in "+count+"...";
     if(count<0){
       clearInterval(counter);
+      countdownEl.innerText="";
       unlock();
     }
   },1000);
@@ -179,7 +180,7 @@ function unlock(){
   launchFireworks();
 }
 
-// TYPEWRITER
+// Typewriter effect
 var message="Out of everyone in this world, I would still choose you. You are my peace, my forever, my everything. Happy Valentine's Day 💜";
 function typeWriter(){
   let i=0;
@@ -195,7 +196,7 @@ function typeWriter(){
   typing();
 }
 
-// FALLING HEARTS
+// Falling hearts
 for(let i=0;i<40;i++){
   let heart=document.createElement("div");
   heart.className="falling-heart";
@@ -206,19 +207,19 @@ for(let i=0;i<40;i++){
   document.body.appendChild(heart);
 }
 
-// FIREWORKS
+// Fireworks
 function launchFireworks(){
   const canvas=document.getElementById("fireworks");
   const ctx=canvas.getContext("2d");
   canvas.width=window.innerWidth;
   canvas.height=window.innerHeight;
 
-  let fireworks=[];
-  function createFirework(){
-    fireworks.push({
+  let particles=[];
+  function createParticle(){
+    particles.push({
       x:Math.random()*canvas.width,
       y:canvas.height,
-      radius:2,
+      radius:2+Math.random()*2,
       color:"purple",
       speed:Math.random()*5+2
     });
@@ -226,28 +227,25 @@ function launchFireworks(){
 
   function animate(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    fireworks.forEach((f,i)=>{
-      f.y-=f.speed;
+    particles.forEach((p,i)=>{
+      p.y-=p.speed;
       ctx.beginPath();
-      ctx.arc(f.x,f.y,f.radius,0,Math.PI*2);
-      ctx.fillStyle=f.color;
+      ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+      ctx.fillStyle=p.color;
       ctx.fill();
-      if(f.y<0) fireworks.splice(i,1);
+      if(p.y<0) particles.splice(i,1);
     });
     requestAnimationFrame(animate);
   }
-  setInterval(createFirework,200);
+
+  setInterval(createParticle,200);
   animate();
 }
 
-// CHOICES
-function yes(){
-  alert("💖 She said YES! Love unlocked forever! 💖");
-}
+// Yes/No buttons
+function yes(){ alert("💖 She said YES! Love unlocked forever! 💖"); }
+function no(){ alert("💔 Oh no! But my love still remains 💜"); }
 
-function no(){
-  alert("💔 Oh no! But my love still remains 💜");
-}
 </script>
 
 </body>
