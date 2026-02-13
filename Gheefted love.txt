@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Accessing Heart System...</title>
+  <style>
+    body {
+      background-color: black;
+      color: #00ff99;
+      font-family: monospace;
+      text-align: center;
+      padding-top: 100px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 18px;
+      background-color: #ff4d6d;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ff1e4d;
+    }
+
+    .heart {
+      font-size: 60px;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Initializing HeartOS v2.14...</h2>
+  <p>Access Restricted 🔒</p>
+
+  <div id="login">
+    <p>Enter Password:</p>
+    <input type="text" id="password" placeholder="Hint: Your Name">
+    <br><br>
+    <button onclick="checkPassword()">Unlock</button>
+  </div>
+
+  <div id="message" class="hidden">
+    <h1>ACCESS GRANTED ❤️</h1>
+    <div class="heart">❤️</div>
+    <p>
+      Out of everyone in this world,<br>
+      I would still choose you.<br><br>
+      You are my peace, my happiness,<br>
+      and my forever.<br><br>
+      Happy Valentine’s Day, My Love 💖
+    </p>
+  </div>
+
+<script>
+  function checkPassword() {
+    var input = document.getElementById("password").value;
+    var correctPassword = "HERNAME"; // Replace with her name in lowercase
+
+    if(input.toLowerCase() === correctPassword.toLowerCase()) {
+      document.getElementById("login").style.display = "none";
+      document.getElementById("message").classList.remove("hidden");
+    } else {
+      alert("Access Denied 💔 Try again.");
+    }
+  }
+</script>
+
+</body>
+</html>
